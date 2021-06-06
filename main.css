@@ -1,0 +1,20 @@
+body { padding-top: 45px; }
+.starter-template { padding: 35px 22px; }
+#logout{ display:none; }
+
+.container {
+    max-width: 980px;
+}
+
+.list_title {
+    background-color: cadetblue;
+}
+
+.text_center {
+    text-align: center;
+}
+
+
+h2 {
+    text-align: center;
+}
