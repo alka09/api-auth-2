@@ -24,34 +24,19 @@ $(document).ready(function () {
         $('#content').html(html);
     });
 
-        $(document).on('submit', '#sign_up_form', async function createUser(){
+        $(document).on('submit', '#sign_up_form', function(){
 
-            const username = document.getElementById('username').value,
-                password = document.getElementById('password').value;
-
-            let formData = new FormData();
-            formData.append('username', username);
-            formData.append('password', password);
-
-            const res = await fetch('http://localhost/rest-api-authentication/api/user', {
-                method: "POST",
-                body: formData
-            })
-
-            const data = await res.json();
-
-            // // получаем данные формы
-            // let sign_up_form=$(this);
-            // let form_data=JSON.stringify(sign_up_form.serializeObject());
+            // получаем данные формы
+            let sign_up_form=$(this);
+            let form_data=JSON.stringify(sign_up_form.serializeObject());
 
             // отправить данные формы в API
             $.ajax({
                 url: "http://localhost/rest-api-authentication/api/user",
-                type: "user",
-                method : "POST",
+                type : "POST",
                 contentType : 'application/json',
-                data : data,
-                success : function(data) {
+                data : form_data,
+                success : function(result) {
                     // в случае удачного завершения запроса к серверу,
                     // сообщим пользователю, что он успешно зарегистрировался и очистим поля ввода
                     $('#response').html("<div class='alert alert-success'>Регистрация завершена успешно. Пожалуйста, войдите.</div>");

@@ -23,8 +23,6 @@ class User{
     function createUser($connect, $data): bool
     {
 
-        $username = $data['username'];
-        $password = $data['password'];
 
         $query = "INSERT INTO " . $this->table_name . "
             SET                
@@ -37,11 +35,11 @@ class User{
         $this->password = htmlspecialchars(strip_tags($this->password));
 
         $prop->bindParam(':username', $this->username);
-        $prop->bindParam(':password', $this->password);
+//        $prop->bindParam(':password', $this->password);
 
 
-//        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-//        $prop->bindParam(':password', $password_hash);
+        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
+        $prop->bindParam(':password', $password_hash);
 
         if($prop->execute()){
             return true;

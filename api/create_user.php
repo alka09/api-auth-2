@@ -19,21 +19,17 @@ $data = json_decode(file_get_contents("php://input"));
 $user->username = $data->username;
 $user->password = $data->password;
 
-if ($type === 'user') {
-    $user->create($db, $data);
+if(!empty($user->username) && !empty($user->password)){
+
+    $user->create();
+    http_response_code(200);
+
+    echo json_encode(array("message" => "User was created."));
 }
 
-//if(!empty($user->username) && !empty($user->password)){
-//
-//    $user->create();
-//    http_response_code(200);
-//
-//    echo json_encode(array("message" => "User was created."));
-//}
-//
-//else{
-//
-//    http_response_code(400);
-//
-//    echo json_encode(array("message" => "Unable to create user."));
-//}
+else{
+
+    http_response_code(400);
+
+    echo json_encode(array("message" => "Unable to create user."));
+}

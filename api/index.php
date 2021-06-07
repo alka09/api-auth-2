@@ -50,6 +50,8 @@ $user->password = $data->password;
 
 if ($type === 'user') {
     if ($user->createUser($db, $data)) {
+        $data = json_decode($data);
+        die(print_r($data));
         echo json_encode(array("message" => "User was created."));
     } else{
         http_response_code(400);
