@@ -37,6 +37,7 @@ if ($jwt) {
             "error" => $e->getMessage()
         ));
     }
+
 }
 
 else{

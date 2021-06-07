@@ -25,7 +25,6 @@ include_once 'lib/php-jwt/src/BeforeValidException.php';
 include_once 'lib/php-jwt/src/ExpiredException.php';
 include_once 'lib/php-jwt/src/SignatureInvalidException.php';
 include_once 'lib/php-jwt/src/JWT.php';
-
 use \Firebase\JWT\JWT;
 
 error_reporting(E_ALL);

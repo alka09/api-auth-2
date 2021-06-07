@@ -20,7 +20,7 @@ class User{
         $this->conn = $db;
     }
 
-    function createUser($connect, $data): bool
+    function createUser($connect): bool
     {
 
 
@@ -56,7 +56,7 @@ class User{
         return false;
     }
 
-    function nameExists(){
+    function usernameExists(){
 
         $query = "SELECT id, password
             FROM " . $this->table_name . "
@@ -67,24 +67,16 @@ class User{
 
         $this->username=htmlspecialchars(strip_tags($this->username));
 
-        // bind given email value
-
-
-        // execute the query
+        $stmt->bindParam(1, $this->username);
         $stmt->execute();
 
-        // get number of rows
         $count = $stmt->rowCount();
 
-        // if email exists, assign values to object properties for easy access and use for php sessions
         if($count>0){
 
-            // get record details / values
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // assign values to object properties
             $this->id = $row['id'];
-            $this->username = $row['username'];
             $this->password = $row['password'];
 
             return true;
