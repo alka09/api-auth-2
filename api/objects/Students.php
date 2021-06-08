@@ -52,36 +52,44 @@ class Students
         }
     }
 
-    function addStudent($connect, $data): bool
-    {
+    function getCountStudent(){
+        $query = "SELECT * FROM " . $this->table_name;
 
-        $query = "INSERT INTO " . $this->table_name . "
-            SET                
-                firstname = :firstname,
-                surname = :surname";
+        $result = mysqli_query($query);
 
-        $prop = $this->conn->prepare($query);
-
-        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
-        $this->surname = htmlspecialchars(strip_tags($this->surname));
-
-        $prop->bindParam(':firstname', $this->firstname);
-        $prop->bindParam(':surname', $this->surname);
-
-        if ($prop->execute()) {
-            return true;
-        }
-
-        http_response_code(201);
-
-        $res = [
-            "status" => true,
-            "student_id" => mysqli_insert_id($connect)
-        ];
-
-        echo json_encode($res);
-
-        return false;
+        return mysqli_result($result);
     }
+
+//    function addStudent($connect, $data): bool
+//    {
+//
+//        $query = "INSERT INTO " . $this->table_name . "
+//            SET
+//                firstname = :firstname,
+//                surname = :surname";
+//
+//        $prop = $this->conn->prepare($query);
+//
+//        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
+//        $this->surname = htmlspecialchars(strip_tags($this->surname));
+//
+//        $prop->bindParam(':firstname', $this->firstname);
+//        $prop->bindParam(':surname', $this->surname);
+//
+//        if ($prop->execute()) {
+//            return true;
+//        }
+//
+//        http_response_code(201);
+//
+//        $res = [
+//            "status" => true,
+//            "student_id" => mysqli_insert_id($connect)
+//        ];
+//
+//        echo json_encode($res);
+//
+//        return false;
+//    }
 
 }

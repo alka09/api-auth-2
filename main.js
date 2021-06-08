@@ -1,29 +1,29 @@
 $(document).ready(function () {
 
-    // показать форму регистрации
-    $(document).on('click', '#sign_up', function () {
-        let html = `
-            <h2>Регистрация</h2>
-            <form id='sign_up_form'">
-                <div class="form-group">
-                    <label for="username">Имя</label>
-                    <input type="text" class="form-control" name="username" id="username" required />
-                </div>
+    // // показать форму регистрации
+    // $(document).on('click', '#sign_up', function () {
+    //     let html = `
+    //         <h2>Регистрация</h2>
+    //         <form id='sign_up_form'">
+    //             <div class="form-group">
+    //                 <label for="username">Имя</label>
+    //                 <input type="text" class="form-control" name="username" id="username" required />
+    //             </div>
+    //
+    //             <div class="form-group">
+    //                 <label for="password">Пароль</label>
+    //                 <input type="password" class="form-control" name="password" id="password" required />
+    //             </div>
+    //
+    //             <button type='submit' class='btn btn-primary'">Регистрация</button>
+    //         </form>
+    //     `;
+    //
+    //     clearResponse();
+    //     $('#content').html(html);
+    // });
 
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" class="form-control" name="password" id="password" required />
-                </div>
-
-                <button type='submit' class='btn btn-primary'">Регистрация</button>
-            </form>
-        `;
-
-        clearResponse();
-        $('#content').html(html);
-    });
-
-    $(document).on('submit', '#sign_up_form', function () {
+    $('#sign_up_form').on('submit', function () {
 
         // получаем данные формы
         let sign_up_form = $(this);
@@ -51,13 +51,13 @@ $(document).ready(function () {
         return false;
     });
 
-// показать форму входа
-    $(document).on('click', '#login', function () {
-        showLoginPage();
-    });
+// // показать форму входа
+//     $(document).on('click', '#login', function () {
+//         showLoginPage();
+//     });
 
 // при отправке формы входа
-    $(document).on('submit', '#login_form', function () {
+    $('#login_form').on('submit', function () {
 
         // получаем данные формы
         let login_form = $(this);
@@ -90,17 +90,13 @@ $(document).ready(function () {
     });
 
 // показать домашнюю страницу
-    $(document).on('click', '#student', function () {
+    $('#student').on('click', function () {
         showStudentsPage();
         clearResponse();
     });
 
-    $(document).on('click', '#update_account', function () {
-        showUpdateAccountForm();
-    });
-
 // выйти из системы
-    $(document).on('click', '#logout', function () {
+    $('#logout').on('click', function () {
         showLoginPage();
         $('#response').html("<div class='alert alert-info'>Вы вышли из системы.</div>");
     });
@@ -155,42 +151,42 @@ $(document).ready(function () {
     }
 
 // функция показать домашнюю страницу
-    function showStudentsPage() {
-
-        // валидация JWT для проверки доступа
-        let jwt = getCookie('jwt');
-        $.post("api/validate_token.php", JSON.stringify({jwt: jwt})).done(function (result) {
-
-            let html = `
-                <div class="container">
-                    <h2>Список студентов</h2>
-                    <div class="row list_title">
-                        <div class="col-sm text_center">
-                            Student's id
-                        </div>
-                        <div class="col-sm text_center">
-                            Student's firstname
-                        </div>
-                        <div class="col-sm text_center">
-                            Student's surname
-                        </div>
-                    </div>
-                </div>
-                <div class="container list_students">
-
-                </div>
-        `;
-            getStudents();
-            $('#content').html(html);
-            showLoggedInMenu();
-        })
-
-            // показать страницу входа при ошибке
-            .fail(function (result) {
-                showLoginPage();
-                $('#response').html("<div class='alert alert-danger'>Пожалуйста войдите, чтобы получить доступ к списку студентов</div>");
-            });
-    }
+//     function showStudentsPage() {
+//
+//         // валидация JWT для проверки доступа
+//         let jwt = getCookie('jwt');
+//         $.post("api/validate_token.php", JSON.stringify({jwt: jwt})).done(function (result) {
+//
+//             let html = `
+//                 <div class="container">
+//                     <h2>Список студентов</h2>
+//                     <div class="row list_title">
+//                         <div class="col-sm text_center">
+//                             Student's id
+//                         </div>
+//                         <div class="col-sm text_center">
+//                             Student's firstname
+//                         </div>
+//                         <div class="col-sm text_center">
+//                             Student's surname
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <div class="container list_students">
+//
+//                 </div>
+//         `;
+//             getStudents();
+//             $('#content').html(html);
+//             showLoggedInMenu();
+//         })
+//
+//             // показать страницу входа при ошибке
+//             .fail(function (result) {
+//                 showLoginPage();
+//                 $('#response').html("<div class='alert alert-danger'>Пожалуйста войдите, чтобы получить доступ к списку студентов</div>");
+//             });
+//     }
 
 // Функция поможет нам прочитать JWT, который мы сохранили ранее.
     function getCookie(cname) {
@@ -208,59 +204,6 @@ $(document).ready(function () {
             }
         }
         return "";
-    }
-
-// если пользователь залогинен
-    function showLoggedInMenu() {
-        // скрыть кнопки вход и зарегистрироваться с панели навигации и показать кнопку выхода
-        $("#login, #sign_up").hide();
-        $("#logout").show();
-    }
-
-    function showUpdateAccountForm() {
-        // валидация JWT для проверки доступа
-        let jwt = getCookie('jwt');
-        $.post("api/validate_token.php", JSON.stringify({jwt: jwt})).done(function (result) {
-
-            // если валидация прошла успешно, покажем данные пользователя в форме
-            let html = `
-            <h2>Обновление аккаунта</h2>
-            <form id='update_account_form'>
-                <div class="form-group">
-                    <label for="firstname">Имя</label>
-                    <input type="text" class="form-control" name="firstname" id="firstname" required value="` + result.data.firstname + `" />
-                </div>
-
-                <div class="form-group">
-                    <label for="lastname">Фамилия</label>
-                    <input type="text" class="form-control" name="lastname" id="lastname" required value="` + result.data.lastname + `" />
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" required value="` + result.data.email + `" />
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" class="form-control" name="password" id="password" />
-                </div>
-
-                <button type='submit' class='btn btn-primary'>
-                    Сохранить
-                </button>
-            </form>
-        `;
-
-            clearResponse();
-            $('#content').html(html);
-        })
-
-            // в случае ошибки / сбоя сообщите пользователю, что ему необходимо войти в систему, чтобы увидеть страницу учетной записи.
-            .fail(function (result) {
-                showLoginPage();
-                $('#response').html("<div class='alert alert-danger'>Пожалуйста, войдите, чтобы получить доступ к странице учетной записи.</div>");
-            });
     }
 
     // функция для преобразования значений формы в формат JSON

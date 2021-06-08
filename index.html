@@ -1,46 +1,70 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html>
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <title>Login form</title>
 
-  <title>Rest API</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="https://kit.fontawesome.com/f9161e07e2.js" crossorigin="anonymous"></script>
+<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous" />-->
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="main.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
 
 
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="#" id='students'>Список студентов</a>
-      <a class="nav-item nav-link" href="#" id='logout'>Выход</a>
-      <a class="nav-item nav-link" href="#" id='login'>Вход</a>
-      <a class="nav-item nav-link" href="#" id='sign_up'>Регистрация</a>
-    </div>
-  </div>
-</nav>
-<main role="main" class="container starter-template">
-
+<!--<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">-->
+<!--  <a class="navbar-brand" href="#">Navbar</a>-->
+<!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--    <span class="navbar-toggler-icon"></span>-->
+<!--  </button>-->
+<!--  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">-->
+<!--    <div class="navbar-nav">-->
+<!--      <a class="nav-item nav-link" href="#" id='students'>Список студентов</a>-->
+<!--      <a class="nav-item nav-link" href="#" id='logout'>Выход</a>-->
+<!--      <a class="nav-item nav-link" href="#" id='login'>Вход</a>-->
+<!--      <a class="nav-item nav-link" href="#" id='sign_up'>Регистрация</a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
   <div class="row">
-    <div class="col">
 
       <div id="response"></div>
 
-      <div id="content"></div>
-    </div>
+<!--      <div id="content"></div>-->
+
   </div>
+<div class="container form_signup">
+  <div class="logo">
+    <img src="img/index.png">
+  </div>
+
+  <p>Welcome to the Learning Management System</p>
+  <span>Please log in to continue</span>
+  <form id='sign_up_form'>
+    <div class="form-group">
+      <input type="text" class="form-control" name="username" id="username" placeholder="Username" required />
+      <i class="fas fa-user-alt"></i>
+    </div>
+
+    <div class="form-group">
+      <input type="password" class="form-control" name="password" id="password" placeholder="Password" required />
+      <i class="fas fa-lock"></i>
+    </div>
+    <div class="remember_me">
+      <label>
+        <input type="checkbox" name="remember_me" checked="checked" /> Remember me
+      </label>
+    </div>
+    <button type='submit' class='btn btn-primary'><span>Log in</span> <i class="fas fa-chevron-circle-right"></i></button>
+  </form>
+</div>
 <div class="container container_for_students_list">
   <div class="container">
     <h2>Список студентов</h2>
