@@ -34,7 +34,7 @@ h2 {
     position: relative;
 }
 
-.form_signup {
+.form_signup, .form_login {
     display: flex;
     flex-direction: column;
     width: 600px;
@@ -42,7 +42,7 @@ h2 {
     margin: 300px auto 0 auto;
 }
 
-.logo {
+.logo, #login_form {
     width: 100%;
 }
 
@@ -51,19 +51,23 @@ h2 {
     margin-bottom: 78px;
 }
 
-.form_signup p {
+.form_signup {
+    display: none;
+}
+
+ p {
     width: 100%;
     font-size: 29px;
     margin: 0;
 }
 
-.form_signup span {
+.form_signup span, .login_form span {
     width: 100%;
     font-size: 18px;
     margin-bottom: 60px;
 }
 
-#sign_up_form, .form-group, .form-control {
+#sign_up_form, .form-group, .form-control, .login_form {
     width: 100%;
 }
 
@@ -100,7 +104,11 @@ input {
     padding: 0 25px;
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    font-size: 18px;
 }
+
 
 .btn span {
     margin: 0;
@@ -111,4 +119,11 @@ input {
     z-index: 10;
     top: 22px;
     left: 25px;
+}
+
+#go_to_signup {
+    cursor: pointer;
+}
+.welcome {
+    margin-bottom: 20px;
 }
