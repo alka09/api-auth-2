@@ -1,5 +1,4 @@
 body {
-    padding-top: 45px;
     background-color: #fefefd;
 }
 
@@ -11,10 +10,6 @@ body {
 
 .container {
     max-width: 980px;
-}
-
-.list_title {
-    background-color: cadetblue;
 }
 
 .text_center {
@@ -39,7 +34,7 @@ h2 {
     flex-direction: column;
     width: 600px;
     align-items: center;
-    margin: 300px auto 0 auto;
+    margin: 150px auto 0 auto;
 }
 
 .logo, #login_form {
@@ -126,4 +121,36 @@ input {
 }
 .welcome {
     margin-bottom: 20px;
+}
+
+table {
+    margin: 0 auto 50px auto;
+    width: 100%;
+}
+
+.container_for_students_list .container h2 {
+    margin-bottom: 10px;
+}
+
+.container_for_students_list .container .color {
+    height: 20px;
+    border: none;
+    background-color: #fd7905;
+}
+
+.list_students tr:nth-child(odd) {
+    background-color: #d4d1cf;
+}
+
+.container_for_students_list .container .student_name {
+    padding: 0 15px;
+}
+
+.container_for_students_list .container #logout_button {
+    height: auto;
+    background-color: transparent;
+    color: black;
+    border: none;
+    justify-content: center;
+    cursor: pointer;
 }

@@ -65,7 +65,7 @@ $(document).ready(function () {
 
         $('.form_login').hide();
         $('.container_for_students_list').show();
-
+        getStudents();
     })
 
 // при отправке формы входа
@@ -101,20 +101,11 @@ $(document).ready(function () {
         return false;
     });
 
-// показать домашнюю страницу
-    $(document).on('click', '#student', function () {
-        showStudentsPage();
-        clearResponse();
-    });
-
-    $(document).on('click', '#update_account', function () {
-        showUpdateAccountForm();
-    });
-
-// выйти из системы
-    $(document).on('click', '#logout', function () {
-        showLoginPage();
-        $('#response').html("<div class='alert alert-info'>Вы вышли из системы.</div>");
+    // выйти из системы
+    $(document).on('click', '#logout_button', function () {
+        $(".form_login").show();
+        $(".container_for_students_list").hide();
+        deleteJwt();
     });
 
     // Удаление всех быстрых сообщений
@@ -122,33 +113,10 @@ $(document).ready(function () {
         $('#response').html('');
     }
 
-    // функция показывает HTML-форму для входа в систему.
-    function showLoginPage() {
-
+    function deleteJwt() {
         // удаление jwt
         setCookie("jwt", "", 1);
-
-        // // форма входа
-        // var html = `
-        // <h2>Вход</h2>
-        // <form id='login_form'>
-        //     <div class='form-group'>
-        //         <label for='username'>Имя</label>
-        //         <input type='text' class='form-control' id='username' name='username' placeholder='Введите имя'>
-        //     </div>
-        //
-        //     <div class='form-group'>
-        //         <label for='password'>Пароль</label>
-        //         <input type='password' class='form-control' id='password' name='password' placeholder='Введите пароль'>
-        //     </div>
-        //
-        //     <button type='submit' class='btn btn-primary'>Войти</button>
-        // </form>
-        // `;
-        //
-        // $('#content').html(html);
         clearResponse();
-        // showLoggedOutMenu();
     }
 
 // сохранение JWT в файле cookie
@@ -162,8 +130,8 @@ $(document).ready(function () {
 // эта функция сделает меню похожим на опции для пользователя, вышедшего из системы.
     function showLoggedOutMenu() {
         // показать кнопку входа и регистрации в меню навигации
-        $("#login, #sign_up").show();
-        $("#logout").hide(); // скрыть кнопку выхода
+        $(".form_login").show();
+        $(".container_for_students_list").hide(); // скрыть кнопку выхода
     }
 
 // функция показать домашнюю страницу
@@ -194,7 +162,7 @@ $(document).ready(function () {
         `;
             getStudents();
             $('#content').html(html);
-            showLoggedInMenu();
+            // showLoggedInMenu();
         })
 
             // показать страницу входа при ошибке
@@ -222,58 +190,12 @@ $(document).ready(function () {
         return "";
     }
 
-// если пользователь залогинен
-    function showLoggedInMenu() {
-        // скрыть кнопки вход и зарегистрироваться с панели навигации и показать кнопку выхода
-        $("#login, #sign_up").hide();
-        $("#logout").show();
-    }
-
-    function showUpdateAccountForm() {
-        // валидация JWT для проверки доступа
-        let jwt = getCookie('jwt');
-        $.post("api/validate_token.php", JSON.stringify({jwt: jwt})).done(function (result) {
-
-            // если валидация прошла успешно, покажем данные пользователя в форме
-            let html = `
-            <h2>Обновление аккаунта</h2>
-            <form id='update_account_form'>
-                <div class="form-group">
-                    <label for="firstname">Имя</label>
-                    <input type="text" class="form-control" name="firstname" id="firstname" required value="` + result.data.firstname + `" />
-                </div>
-
-                <div class="form-group">
-                    <label for="lastname">Фамилия</label>
-                    <input type="text" class="form-control" name="lastname" id="lastname" required value="` + result.data.lastname + `" />
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" required value="` + result.data.email + `" />
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" class="form-control" name="password" id="password" />
-                </div>
-
-                <button type='submit' class='btn btn-primary'>
-                    Сохранить
-                </button>
-            </form>
-        `;
-
-            clearResponse();
-            $('#content').html(html);
-        })
-
-            // в случае ошибки / сбоя сообщите пользователю, что ему необходимо войти в систему, чтобы увидеть страницу учетной записи.
-            .fail(function (result) {
-                showLoginPage();
-                $('#response').html("<div class='alert alert-danger'>Пожалуйста, войдите, чтобы получить доступ к странице учетной записи.</div>");
-            });
-    }
+// // если пользователь залогинен
+//     function showLoggedInMenu() {
+//         // скрыть кнопки вход и зарегистрироваться с панели навигации и показать кнопку выхода
+//         $("#login, #sign_up").hide();
+//         $("#logout").show();
+//     }
 
     // функция для преобразования значений формы в формат JSON
     $.fn.serializeObject = function () {
@@ -294,23 +216,22 @@ $(document).ready(function () {
     };
 
 });
+
 async function getStudents() {
     let result = await fetch('http://localhost/rest-api-authentication/api/students');
     let students = await result.json();
 
     students.forEach((student) => {
         document.querySelector('.list_students').innerHTML += `
-        <div class="row">
-            <div class="col-sm text_center">
-                ${student.id}
-            </div>
-            <div class="col-sm text_center">
-                ${student.firstname}
-            </div>
-            <div class="col-sm text_center">
-                ${student.surname}
-            </div>
-        </div>
+       
+            <tr>
+                <td class="student_name"> 
+                    <span><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        </i> ${student.firstname}</span> 
+                    <span>${student.surname}</span> 
+                </td>
+                <td>${student.group}</td>
+            </tr>
         `
     })
 }
