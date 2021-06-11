@@ -51,12 +51,21 @@ $(document).ready(function () {
         return false;
     });
 
-// показать форму входа
+// показать форму регистрации
     $(document).on('click', '#go_to_signup', function (e) {
         e.preventDefault();
-        showLoginPage();
+        // showLoginPage();
         $('.form_login').hide();
         $('.form_signup').show();
+
+    });
+
+    // показать форму входа
+    $(document).on('click', '#button_signup', function (e) {
+        e.preventDefault();
+        // showLoginPage();
+        $('.form_signup').hide();
+        $('.form_login').show();
 
     });
 
@@ -66,6 +75,7 @@ $(document).ready(function () {
         $('.form_login').hide();
         $('.container_for_students_list').show();
         getStudents();
+        $('#login_form').trigger("reset");
     })
 
 // при отправке формы входа
@@ -90,12 +100,15 @@ $(document).ready(function () {
                 showStudentsPage();
                 $('#response').html("<div class='alert alert-success'>Успешный вход в систему.</div>");
 
+
             },
             error: function (xhr, resp, text) {
                 // при ошибке сообщим пользователю, что вход в систему не выполнен и очистим поля ввода
                 $('#response').html("<div class='alert alert-danger'>Ошибка входа. Имя или пароль указан неверно.</div>");
                 login_form.find('input').val('');
-            }
+            },
+
+
         });
 
         return false;
@@ -134,44 +147,6 @@ $(document).ready(function () {
         $(".container_for_students_list").hide(); // скрыть кнопку выхода
     }
 
-// функция показать домашнюю страницу
-    function showStudentsPage() {
-
-        // валидация JWT для проверки доступа
-        let jwt = getCookie('jwt');
-        $.post("api/validate_token.php", JSON.stringify({jwt: jwt})).done(function (result) {
-
-            let html = `
-                <div class="container">
-                    <h2>Список студентов</h2>
-                    <div class="row list_title">
-                        <div class="col-sm text_center">
-                            Student's id
-                        </div>
-                        <div class="col-sm text_center">
-                            Student's firstname
-                        </div>
-                        <div class="col-sm text_center">
-                            Student's surname
-                        </div>
-                    </div>
-                </div>
-                <div class="container list_students">
-
-                </div>
-        `;
-            getStudents();
-            $('#content').html(html);
-            // showLoggedInMenu();
-        })
-
-            // показать страницу входа при ошибке
-            .fail(function (result) {
-                showLoginPage();
-                $('#response').html("<div class='alert alert-danger'>Пожалуйста войдите, чтобы получить доступ к списку студентов</div>");
-            });
-    }
-
 // Функция поможет нам прочитать JWT, который мы сохранили ранее.
     function getCookie(cname) {
         let name = cname + "=";
@@ -189,13 +164,6 @@ $(document).ready(function () {
         }
         return "";
     }
-
-// // если пользователь залогинен
-//     function showLoggedInMenu() {
-//         // скрыть кнопки вход и зарегистрироваться с панели навигации и показать кнопку выхода
-//         $("#login, #sign_up").hide();
-//         $("#logout").show();
-//     }
 
     // функция для преобразования значений формы в формат JSON
     $.fn.serializeObject = function () {
@@ -215,16 +183,19 @@ $(document).ready(function () {
         return o;
     };
 
+
+
 });
 
 async function getStudents() {
     let result = await fetch('http://localhost/rest-api-authentication/api/students');
     let students = await result.json();
 
+
     students.forEach((student) => {
-        document.querySelector('.list_students').innerHTML += `
-       
-            <tr>
+        document.querySelector('.list_students').innerHTML += `  
+        
+            <tr class="num">
                 <td class="student_name"> 
                     <span><i class="fa fa-check-circle-o" aria-hidden="true"></i>
                         </i> ${student.firstname}</span> 
@@ -236,3 +207,7 @@ async function getStudents() {
     })
 }
 
+// // пагинация
+// let table = document.getElementById("table_students_list");
+// let tbodyRowCount = table.tBodies[0].rows.length;
+// console.log (tbodyRowCount);
